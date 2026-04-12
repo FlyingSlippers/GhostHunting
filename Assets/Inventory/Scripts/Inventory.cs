@@ -16,16 +16,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         allSlots = 6;
         slot = new GameObject[allSlots];
-        for (int  i =0 ; i < allSlots;i++)
-        {
-            slot[i] = slotHolder.transform.GetChild(i).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-
-            if (slot[i].GetComponent<Slot>().itemObject == null)
-            {
-                slot[i].GetComponent<Slot>().isEmpty = true;
-                break;
-            }
-        }
+    
     }
 
     void Update()
@@ -41,6 +32,17 @@ public class NewMonoBehaviourScript : MonoBehaviour
         else
         {
             inventoryPanel.SetActive(false);
+        }
+
+        for (int  i =0 ; i < allSlots;i++)
+        {
+            slot[i] = slotHolder.transform.GetChild(i).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+
+            if (slot[i].GetComponent<Slot>().itemObject == null)
+            {
+                slot[i].GetComponent<Slot>().isEmpty = true;
+                break;
+            }
         }
     }
 
@@ -60,7 +62,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
         {
             if (slot[i].GetComponent<Slot>().isEmpty)
             {
-                itemObject.GetComponent<Item>().isPickedUp = true;
+                if (itemType == "Utility" || itemType == "Soul")
+                {
+                     itemObject.GetComponent<Item>().isPickedUp = true;
 
                 slot[i].GetComponent<Slot>().itemObject = itemObject;
                 slot[i].GetComponent<Slot>().itemImage = itemImage;
@@ -77,6 +81,13 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 slot[i].GetComponent<Slot>().UpdateSlot();
                 
                 break;
+                }
+                else
+                {
+                    Debug.Log("Item type not supported");
+                    break;
+                }
+               
             }
         }
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public enum ItemType
-    {Item, Soul, Material, Weapon} 
+    {Utility, Soul, Material, Weapon} 
 public enum ItemRarity
     {Common, Uncommon, Rare, Epic, Legendary}
 

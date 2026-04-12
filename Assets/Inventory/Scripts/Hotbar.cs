@@ -1,42 +1,48 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Hotbar : MonoBehaviour
 {
-    public GameObject inventoryPanel;
-    public bool inventoryEnabled;
+    public GameObject hotbarPanel;
+    private bool hotbarEnabled;
 
     private int allSlots = 6;
     private int enabledSlots;
     private GameObject [] slot;
-     
+    
+    private Inventory inventory;
     
      public GameObject slotHolder;
     void Start()
     {
+        inventory = GetComponent<Inventory>();
         allSlots = 6;
         slot = new GameObject[allSlots];
-    
+        hotbarEnabled = true;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (inventory.inventoryEnabled == true)
         {
-            inventoryEnabled = !inventoryEnabled;
-        }
-        if (inventoryEnabled)
-        {
-            inventoryPanel.SetActive(true);
+            hotbarEnabled = false;
         }
         else
         {
-            inventoryPanel.SetActive(false);
+            hotbarEnabled = true;
+        }
+        if (hotbarEnabled)
+        {
+            hotbarPanel.SetActive(true);
+        }
+        else
+        {
+            hotbarPanel.SetActive(false);
         }
 
         for (int  i =0 ; i < allSlots;i++)
         {
-            slot[i] = slotHolder.transform.GetChild(0).gameObject.transform.GetChild(i).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+            slot[i] = slotHolder.transform.GetChild(1).gameObject.transform.GetChild(i).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
 
             if (slot[i].GetComponent<Slot>().itemObject == null)
             {
@@ -62,7 +68,7 @@ public class Inventory : MonoBehaviour
         {
             if (slot[i].GetComponent<Slot>().isEmpty)
             {
-                if (itemType == "Material")
+                if (itemType == "Utility" || itemType == "Soul")
                 {
                      itemObject.GetComponent<Item>().isPickedUp = true;
 
